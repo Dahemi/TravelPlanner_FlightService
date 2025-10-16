@@ -36,6 +36,8 @@ export class FlightService {
     const results = this.flights.filter(
       (f) => f.from == from && f.to == to && f.departTime.startsWith(date),
     );
+    if (results.length == 0)
+      return { flights: { message: 'No flights found' } };
     return { flights: results };
   }
 
@@ -46,7 +48,7 @@ export class FlightService {
     const results = this.flights.filter(
       (f) => f.from == from && f.to == to && f.departTime.startsWith(date),
     );
-    if (results.length == 0) return { flight: null };
+    if (results.length == 0) return { flight: { message: 'No flights found' } };
     const cheapest = results.reduce((a, b) => (a.price <= b.price ? a : b));
     return { flight: cheapest };
   }
